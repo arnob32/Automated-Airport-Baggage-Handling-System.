@@ -1,0 +1,10 @@
+[2025-11-12] Creating new task: TestTask for baggage 101
+[2025-11-12] AGV-1 loaded baggage 101
+[2025-11-12] AGV-1 moving to Gate A
+[2025-11-12] AGV-1 unloaded baggage 101
+[2025-11-12] AGV AGV-1 completed task: TestTask
+[2025-11-12] Creating new task: Move for baggage 102
+[2025-11-12] AGV-1 loaded baggage 102
+[2025-11-12] AGV-1 moving to Gate B
+[2025-11-12] AGV-1 unloaded baggage 102
+[2025-11-12] AGV AGV-1 completed task: Move
