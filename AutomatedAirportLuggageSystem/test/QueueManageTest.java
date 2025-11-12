@@ -20,14 +20,17 @@ public class QueueManageTest {
         queue = new QueueManage(3, log);
     }
 
+    
     @Test
     void testRequestCharge() {
         AGV agv = new AGV(1, "AGV-Test", log);
         assertDoesNotThrow(() -> queue.requestCharge(agv));
     }
 
+    
     @AfterEach
     void tearDown() {
         queue.shutdown();
     }
 }
+
