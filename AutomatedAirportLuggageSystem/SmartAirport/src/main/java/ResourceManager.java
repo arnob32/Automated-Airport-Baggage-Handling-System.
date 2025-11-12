@@ -1,26 +1,20 @@
-package test;
+package SmartAirport.src.main.java;
 
 
-import org.junit.jupiter.api.*;
 
-import  SmartAirport.src.main.java.ResourceManager;
+import java.io.*;
 
-import java.io.File;
-import static org.junit.jupiter.api.Assertions.*;
-
-public class ResourceManagerTest {
-    private ResourceManager rm;
-
-    @BeforeEach
-    void setup() {
-        rm = new ResourceManager();
+public class ResourceManager {
+    public void clearOldLogs() {
+        File logDir = new File("logs");
+        if (logDir.exists()) deleteRecursive(logDir);
+        System.out.println("Logs cleared successfully.");
     }
 
-    @Test
-    void testClearOldLogs() {
-        File dir = new File("logs");
-        if (!dir.exists()) dir.mkdirs();
-        rm.clearOldLogs();
-        assertFalse(dir.exists(), "Logs folder should be deleted after clearOldLogs()");
+    private void deleteRecursive(File file) {
+        if (file.isDirectory()) {
+            for (File f : file.listFiles()) deleteRecursive(f);
+        }
+        file.delete();
     }
 }
