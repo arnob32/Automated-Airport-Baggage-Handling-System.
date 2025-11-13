@@ -1,5 +1,6 @@
 package exceptions;
 
-public class TaskException {
 
-}
+public class TaskException extends CustomExceptions {
+  
+    }

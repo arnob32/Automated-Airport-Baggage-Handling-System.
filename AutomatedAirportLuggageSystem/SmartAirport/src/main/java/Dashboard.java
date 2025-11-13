@@ -6,15 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
-
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.*;
-import java.util.List;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Dashboard extends JFrame {
 
@@ -36,36 +29,42 @@ public class Dashboard extends JFrame {
     private StorageArea storageArea;
     private TaskManager taskManager;
 
+    private boolean simulationStarted = false;
+
+    // Thread pool for AGV concurrency
+    private final ExecutorService agvExecutor = Executors.newFixedThreadPool(5);
+
     public Dashboard() {
         super("Airport Smart Luggage – Simulation Dashboard");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        // --- Initialize System Components ---
+        // --- System Components ---
         log = new LogService();
         queueManage = new QueueManage(5, log);
         storageArea = new StorageArea(1, "Main Storage", 50);
         taskManager = new TaskManager(log, storageArea, queueManage);
 
-        // --- Create AGVs and Charging Stations ---
+        // --- AGVs ---
         for (int i = 1; i <= 5; i++) {
             agvs.add(new AGV(i, "AGV-" + i, log));
             agvListModel.addElement("AGV-" + i + " | Battery: 100% | Status: Free");
         }
+
+        // --- Charging Stations ---
         for (int i = 1; i <= 5; i++) {
             stations.add(new ChargingStation(i, "Station-" + i, log));
             stationListModel.addElement("Station-" + i + " | Available");
         }
 
-        // --- Create Luggage List ---
+        // --- Baggage List ---
         for (int i = 1; i <= 6; i++) {
             baggageList.add(new Baggage(i, "Gate " + (char) ('A' + i)));
             luggageListModel.addElement("Baggage-" + i + " → Gate " + (char) ('A' + i));
         }
 
-        // --- Left Panel (AGV List) ---
+        // --- AGV List UI ---
         JList<String> agvList = new JList<>(agvListModel);
-        agvList.setBorder(new TitledBorder("AGVs"));
         agvList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int index = agvList.getSelectedIndex();
@@ -73,9 +72,8 @@ public class Dashboard extends JFrame {
             }
         });
 
-        // --- Right Panel (Luggage List) ---
+        // --- Luggage List UI ---
         JList<String> luggageList = new JList<>(luggageListModel);
-        luggageList.setBorder(new TitledBorder("Available Luggage"));
         luggageList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int index = luggageList.getSelectedIndex();
@@ -83,15 +81,15 @@ public class Dashboard extends JFrame {
             }
         });
 
-        // --- Bottom Panel (Buttons) ---
-        JPanel controlPanel = new JPanel(new GridLayout(2, 3, 8, 8));
+        // --- Buttons ---
         JButton startBtn = new JButton("Start Simulation");
         JButton loadMoveBtn = new JButton("Load & Move to Storage");
         JButton chargeBtn = new JButton("Send to Charge");
-        JButton selectStationBtn = new JButton("Select Station");
+        JButton selectStationBtn = new JButton("Select Charging Station");
         JButton showLogBtn = new JButton("Show Logs");
         JButton exitBtn = new JButton("Exit");
 
+        JPanel controlPanel = new JPanel(new GridLayout(2, 3, 8, 8));
         controlPanel.add(startBtn);
         controlPanel.add(loadMoveBtn);
         controlPanel.add(chargeBtn);
@@ -99,105 +97,179 @@ public class Dashboard extends JFrame {
         controlPanel.add(showLogBtn);
         controlPanel.add(exitBtn);
 
-        startBtn.addActionListener(this::startSimulation);
-        loadMoveBtn.addActionListener(this::loadAndMove);
-        chargeBtn.addActionListener(this::sendToCharge);
-        selectStationBtn.addActionListener(this::selectStation);
-        showLogBtn.addActionListener(e -> showLogs());
-        exitBtn.addActionListener(e -> System.exit(0));
-
-        // --- Console Output ---
+        // --- Console ---
         console.setEditable(false);
         JScrollPane consolePane = new JScrollPane(console);
-        consolePane.setBorder(new TitledBorder("System Logs"));
 
-        // --- Layout Assembly ---
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                new JScrollPane(agvList), new JScrollPane(luggageList));
-        splitPane.setDividerLocation(350);
+        // --- Layout ---
+        add(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                new JScrollPane(agvList), new JScrollPane(luggageList)), BorderLayout.CENTER);
 
-        add(splitPane, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);
         add(consolePane, BorderLayout.NORTH);
+
+        // --- Button Listeners ---
+        startBtn.addActionListener(this::startSimulation);
+        loadMoveBtn.addActionListener(e -> runIfStarted(() -> loadAndMove()));
+        chargeBtn.addActionListener(e -> runIfStarted(() -> sendToCharge()));
+        selectStationBtn.addActionListener(e -> runIfStarted(() -> selectStation()));
+        showLogBtn.addActionListener(e -> runIfStarted(this::showLogs));
+        exitBtn.addActionListener(e -> System.exit(0));
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    // --- Button Actions ---
+    // ========================================================================
+    // Simulation Controls
+    // ========================================================================
 
     private void startSimulation(ActionEvent e) {
-        console.append("Simulation started!\n");
-        log.writeRecord("Simulation started by Professor.");
-        refreshAGVList();
+        simulationStarted = true;
+        console.append("Simulation Started!\n");
     }
 
-    private void loadAndMove(ActionEvent e) {
+    private void runIfStarted(Runnable action) {
+        if (!simulationStarted) {
+            JOptionPane.showMessageDialog(this, "Start the simulation first!");
+            return;
+        }
+        action.run();
+    }
+
+    // ========================================================================
+    // AGV Load & Move
+    // ========================================================================
+
+    private void loadAndMove() {
         if (selectedAGV == null || selectedBaggage == null) {
-            console.append("⚠️ Please select an AGV and a baggage first.\n");
-            return;
-        }
-        if (!selectedAGV.isAvailable()) {
-            console.append("⚠️ " + selectedAGV.getName() + " is busy.\n");
+            console.append("⚠ Select AGV & baggage first.\n");
             return;
         }
 
-        console.append(selectedAGV.getName() + " loading " + selectedBaggage.getId() + "\n");
-        selectedAGV.loadBaggage(selectedBaggage);
-        selectedAGV.moveToDestination(selectedBaggage.getDestination());
-        selectedAGV.unloadBaggage(storageArea);
-        console.append(selectedAGV.getName() + " unloaded baggage at Storage Area.\n");
-        selectedBaggage.updateStatus("Delivered");
-        refreshAGVList();
+        AGV agv = selectedAGV;
+        Baggage bag = selectedBaggage;
+
+        // Battery check
+        if (agv.getBatteryLevel() <= 0) {
+            JOptionPane.showMessageDialog(this,
+                    agv.getName() + " battery is 0%. Please charge it.");
+            return;
+        }
+
+        // Remove baggage
+        baggageList.remove(bag);
+        luggageListModel.removeElement("Baggage-" + bag.getId() + " → " + bag.getDestination());
+
+        console.append("🚀 " + agv.getName() + " is transporting baggage " + bag.getId() + "\n");
+
+        // CONCURRENT AGV TASK
+        agvExecutor.submit(() -> {
+
+            agv.loadBaggage(bag);
+            simulateBatteryDrain(agv, 5);
+
+            agv.moveToDestination(bag.getDestination());
+            simulateBatteryDrain(agv, 5);
+
+            if (agv.getBatteryLevel() <= 0) {
+                agv.setAvailable(false);
+                console.append("❌ " + agv.getName() + " ran out of battery!\n");
+            } else {
+                agv.unloadBaggage(storageArea);
+                console.append("✅ " + agv.getName() + " delivered baggage.\n");
+            }
+
+            SwingUtilities.invokeLater(() -> {
+                refreshAGVList();
+                refreshLuggageList();
+            });
+
+        });
+
+        selectedAGV = null;
+        selectedBaggage = null;
     }
 
-    private void sendToCharge(ActionEvent e) {
+    // ========================================================================
+    // Charging System
+    // ========================================================================
+
+    private void sendToCharge() {
         if (selectedAGV == null) {
-            console.append("⚠️ Please select an AGV first.\n");
+            JOptionPane.showMessageDialog(this, "Select an AGV first!");
             return;
         }
         if (selectedStation == null) {
-            console.append("⚠️ Please select a Charging Station first.\n");
+            JOptionPane.showMessageDialog(this, "Select a charging station!");
             return;
         }
-        if (selectedAGV.getBatteryLevel() >= 30) {
-            console.append("⚠️ Battery above 30%, charging not needed.\n");
+
+        // Check if station busy
+        if (!selectedStation.isAvailable()) {
+            JOptionPane.showMessageDialog(this, "Station busy. Choose another.");
             return;
         }
-        new Thread(() -> selectedStation.chargeAGV(selectedAGV)).start();
-        console.append(selectedAGV.getName() + " sent to " + selectedStation.showStatus() + "\n");
-        refreshAGVList();
+
+        AGV agv = selectedAGV;
+
+        console.append("🔋 " + agv.getName() + " going to charge...\n");
+
+        new Thread(() -> {
+            selectedStation.chargeAGV(agv);
+            SwingUtilities.invokeLater(this::refreshAGVList);
+        }).start();
     }
 
-    private void selectStation(ActionEvent e) {
-        String station = (String) JOptionPane.showInputDialog(this,
-                "Select a station:",
-                "Charging Station",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
+    private void selectStation() {
+        String s = (String) JOptionPane.showInputDialog(this,
+                "Choose station:", "Charging Station",
+                JOptionPane.PLAIN_MESSAGE, null,
                 stationListModel.toArray(),
                 stationListModel.get(0));
-        if (station != null) {
-            int index = stationListModel.indexOf(station);
-            selectedStation = stations.get(index);
-            console.append("Selected " + station + "\n");
+
+        if (s != null) {
+            selectedStation = stations.get(stationListModel.indexOf(s));
         }
     }
 
+    // ========================================================================
+    // Helper Methods
+    // ========================================================================
+
     private void showLogs() {
-        console.append("\n--- Recent Logs ---\n");
-        log.writeRecord("Professor viewed logs from UI.");
-        console.append("Logs are stored in /logs folder.\n");
+        console.append("Log files stored in /data/logs\n");
     }
 
     private void refreshAGVList() {
         agvListModel.clear();
-        for (AGV agv : agvs) {
-            agvListModel.addElement(agv.getName() + " | Battery: " +
-                    agv.getBatteryLevel() + "% | Status: " + (agv.isAvailable() ? "Free" : "Busy"));
+        for (AGV a : agvs) {
+            String status = a.getBatteryLevel() <= 0 ? "Needs Charging ⚠" :
+                    (a.isAvailable() ? "Free" : "Busy");
+
+            agvListModel.addElement(a.getName() + " | Battery: " +
+                    (int) a.getBatteryLevel() + "% | Status: " + status);
         }
     }
+
+    private void refreshLuggageList() {
+        luggageListModel.clear();
+        for (Baggage b : baggageList) {
+            luggageListModel.addElement("Baggage-" + b.getId() + " → " + b.getDestination());
+        }
+    }
+
+    private void simulateBatteryDrain(AGV agv, int drainAmount) {
+        for (int i = 0; i < drainAmount; i++) {
+            agv.setBatteryLevel(agv.getBatteryLevel() - 1);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException ignored) {}
+        }
+    }
+
+    // ========================================================================
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Dashboard::new);

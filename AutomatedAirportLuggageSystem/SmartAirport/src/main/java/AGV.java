@@ -1,5 +1,8 @@
 package SmartAirport.src.main.java;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class AGV {
 
     private final int id;
@@ -8,6 +11,8 @@ public class AGV {
     private Baggage carryingBaggage;
     private boolean available = true;
     private final LogService logService;
+ // Thread pool to run AGVs concurrently
+    private ExecutorService agvExecutor = Executors.newFixedThreadPool(5);
 
     public AGV(int id, String name, LogService logService) {
         this.id = id;

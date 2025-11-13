@@ -1,0 +1,22 @@
+[2025-11-13 11:54:53] Simulation started by Professor.
+[2025-11-13 11:55:39] Professor viewed logs from UI.
+[2025-11-13 11:57:17] AGV-Test joined charging queue.
+[2025-11-13 11:57:17] Charging START for AGV-Test
+[2025-11-13 11:57:47] Creating new task: TestTask for baggage 101
+[2025-11-13 11:57:47] AGV AGV-1 completed task: TestTask
+[2025-11-13 11:57:47] Creating new task: Move for baggage 102
+[2025-11-13 11:57:47] AGV AGV-1 completed task: Move
+[2025-11-13 11:59:52] JUnit Test Log
+[2025-11-13 12:00:05] Creating new task: TestTask for baggage 101
+[2025-11-13 12:00:05] AGV AGV-1 completed task: TestTask
+[2025-11-13 12:00:05] Creating new task: Move for baggage 102
+[2025-11-13 12:00:05] AGV AGV-1 completed task: Move
+[2025-11-13 12:00:05] AGV-Test joined charging queue.
+[2025-11-13 12:00:05] Charging START for AGV-Test
+[2025-11-13 12:00:05] JUnit Test Log
+[2025-11-13 12:00:20] AGV-Test joined charging queue.
+[2025-11-13 12:00:20] Charging START for AGV-Test
+[2025-11-13 12:00:42] Creating new task: TestTask for baggage 101
+[2025-11-13 12:00:42] AGV AGV-1 completed task: TestTask
+[2025-11-13 12:00:42] Creating new task: Move for baggage 102
+[2025-11-13 12:00:42] AGV AGV-1 completed task: Move

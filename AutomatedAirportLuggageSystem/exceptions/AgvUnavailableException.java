@@ -1,5 +1,5 @@
 package exceptions;
 
-public class AgvUnavailableException {
-
+public class AgvUnavailableException extends TaskException {
+  
 }
