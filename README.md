@@ -5,9 +5,9 @@ This project simulates an automated airport luggage system using AGVs, managing 
 This project models an automated airport luggage management system using autonomous guided vehicles (AGVs). It simulates baggage transport, task scheduling, queue management, and intelligent charging across a busy airport environment. The system coordinates multiple AGVs to enhance efficiency, reduce congestion, and improve overall baggage-handling reliability. Through modular Java components, it demonstrates how automation can optimize modern airport operations.
 
 # Team Membar and Roles Distribution:
-  1. Ibrahim Kalil - MDT -7213232 (LogServiceTest.java, StorageArea.java, ResourceManager.java, RegexSearch.java, Baggage.java, TaskException.java, ItemNotFoundException.java, CustomExceptions.java)
+  1. Ibrahim Kalil - MDT -7213232 (StorageArea.java, ResourceManager.java, RegexSearch.java, Baggage.java, TaskException.java, ItemNotFoundException.java, CustomExceptions.java)
   2. Nawshad Fahim - MDT - 7216629 (StationBusyException.java, TaskManager.java, QueueManager.java, Chargingstation.java )
-  3. Raju Naidu - MDT -7213668 (AgvUnavailableException.java, )
+  3. Raju Naidu - MDT -7213668 (AgvUnavailableException.java,LogServiceTest.java, LogRecord.java,Dashboard.java,AgVTest.java)
 
 # Technologies Used
   1. Mention the tools and languages:
@@ -23,7 +23,9 @@ This project models an automated airport luggage management system using autonom
 # ScreenCast Video
  Link; https://drive.google.com/file/d/1UmJyqmAfcwJcIFCwc9kxV486QbNO2Ygy/view?usp=sharing
 # Presentation
-[CapstonePresentation.pptx](https://github.com/user-attachments/files/23553560/CapstonePresentation.pptx)
+[CapstonePresentation.pptx](https://github.com/user-attachments/files/23556019/CapstonePresentation.pptx)
+
+
 
 
 # Why This System Is Effective
