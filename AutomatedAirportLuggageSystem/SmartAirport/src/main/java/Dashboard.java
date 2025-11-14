@@ -3,7 +3,8 @@ package SmartAirport.src.main.java;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,7 +27,7 @@ public class Dashboard extends JFrame {
     private LogService log;
     private QueueManage queueManage;
     private StorageArea storageArea;
-    private TaskManager taskManager;
+    //private TaskManager taskManager;
 
     private boolean simulationStarted = false;
 
@@ -54,7 +55,7 @@ public class Dashboard extends JFrame {
         log = new LogService();
         queueManage = new QueueManage(5, log);
         storageArea = new StorageArea(1, "Main Storage", 50);
-        taskManager = new TaskManager(log, storageArea, queueManage);
+       // taskManager = new TaskManager(log, storageArea, queueManage);
 
         // AGVs
         for (int i = 1; i <= 5; i++) {

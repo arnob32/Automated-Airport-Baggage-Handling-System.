@@ -1,0 +1,7 @@
+[2025-11-14 01:15:46] Creating new task: TestTask for baggage 101
+[2025-11-14 01:15:46] AGV AGV-1 completed task: TestTask
+[2025-11-14 01:15:46] Creating new task: Move for baggage 102
+[2025-11-14 01:15:46] AGV AGV-1 completed task: Move
+[2025-11-14 01:15:46] AGV-Test joined charging queue.
+[2025-11-14 01:15:46] Charging START for AGV-Test
+[2025-11-14 01:15:46] JUnit Test Log

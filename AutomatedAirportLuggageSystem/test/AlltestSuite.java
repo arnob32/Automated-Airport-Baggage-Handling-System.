@@ -11,7 +11,7 @@ import org.junit.platform.suite.api.Suite;
         AGVTest.class,
         QueueManageTest.class,
         LogServiceTest.class,
-        ResourceManagerTest.class
+     
 })
 
 

@@ -1,0 +1,46 @@
+[2025-11-14 00:48:22] AGV-1 loaded baggage 1
+[2025-11-14 00:48:23] AGV-1 moving to Gate B
+[2025-11-14 00:48:23] AGV-1 reached Gate B | Battery: 75.0%
+[2025-11-14 00:48:25] AGV-1 unloaded baggage 1 into storage.
+[2025-11-14 00:48:29] AGV-1 loaded baggage 3
+[2025-11-14 00:48:31] AGV-1 moving to Gate D
+[2025-11-14 00:48:31] AGV-1 reached Gate D | Battery: 45.0%
+[2025-11-14 00:48:32] AGV-1 unloaded baggage 3 into storage.
+[2025-11-14 00:48:43] AGV-1 loaded baggage 2
+[2025-11-14 00:48:44] AGV-1 moving to Gate C
+[2025-11-14 00:48:44] AGV-1 reached Gate C | Battery: 15.0%
+[2025-11-14 00:48:46] AGV-1 unloaded baggage 2 into storage.
+[2025-11-14 00:50:59] AGV-1 loaded baggage 1
+[2025-11-14 00:51:01] AGV-1 moving to Gate B
+[2025-11-14 00:51:01] AGV-1 reached Gate B | Battery: 75.0%
+[2025-11-14 00:51:03] AGV-1 unloaded baggage 1 into storage.
+[2025-11-14 00:51:10] AGV-1 loaded baggage 2
+[2025-11-14 00:51:12] AGV-1 moving to Gate C
+[2025-11-14 00:51:12] AGV-1 reached Gate C | Battery: 45.0%
+[2025-11-14 00:51:13] AGV-1 unloaded baggage 2 into storage.
+[2025-11-14 00:51:14] AGV-1 loaded baggage 7
+[2025-11-14 00:51:15] AGV-1 moving to Gate H
+[2025-11-14 00:51:15] AGV-1 reached Gate H | Battery: 15.0%
+[2025-11-14 00:51:17] AGV-1 unloaded baggage 7 into storage.
+[2025-11-14 01:15:35] AGV-1 moving to Gate Z
+[2025-11-14 01:15:35] AGV-1 battery depleted to 0%. Marked as unavailable.
+[2025-11-14 01:15:35] AGV-1 reached Gate Z | Battery: 0.0%
+[2025-11-14 01:15:35] AGV-1 loaded baggage 1
+[2025-11-14 01:15:35] AGV-1 unloaded baggage 1 into storage.
+[2025-11-14 01:15:35] AGV-1 moving to Gate B
+[2025-11-14 01:15:35] AGV-1 reached Gate B | Battery: 80.0%
+[2025-11-14 01:15:46] AGV-1 loaded baggage 101
+[2025-11-14 01:15:46] AGV-1 moving to Gate A
+[2025-11-14 01:15:46] AGV-1 reached Gate A | Battery: 80.0%
+[2025-11-14 01:15:46] AGV-1 unloaded baggage 101 into storage.
+[2025-11-14 01:15:46] AGV-1 loaded baggage 102
+[2025-11-14 01:15:46] AGV-1 moving to Gate B
+[2025-11-14 01:15:46] AGV-1 reached Gate B | Battery: 80.0%
+[2025-11-14 01:15:46] AGV-1 unloaded baggage 102 into storage.
+[2025-11-14 01:15:46] AGV-1 moving to Gate Z
+[2025-11-14 01:15:46] AGV-1 battery depleted to 0%. Marked as unavailable.
+[2025-11-14 01:15:46] AGV-1 reached Gate Z | Battery: 0.0%
+[2025-11-14 01:15:46] AGV-1 loaded baggage 1
+[2025-11-14 01:15:46] AGV-1 unloaded baggage 1 into storage.
+[2025-11-14 01:15:46] AGV-1 moving to Gate B
+[2025-11-14 01:15:46] AGV-1 reached Gate B | Battery: 80.0%

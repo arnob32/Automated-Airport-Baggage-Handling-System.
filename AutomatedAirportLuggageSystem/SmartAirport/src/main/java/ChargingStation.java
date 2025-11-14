@@ -2,11 +2,7 @@ package SmartAirport.src.main.java;
 
 import javax.swing.*;
 
-/**
- * ChargingStation class simulates an individual charging station.
- * Only one AGV can charge at a time.
- * If another AGV tries to charge while busy, a warning message is shown.
- */
+
 public class ChargingStation {
     private final int id;
     private final String location;
@@ -19,10 +15,7 @@ public class ChargingStation {
         this.logService = logService;
     }
 
-    /**
-     * Charge the given AGV if this station is available.
-     * Otherwise, display a warning dialog.
-     */
+
     public synchronized void chargeAGV(AGV agv) {
         if (!isAvailable) {
             // 🚫 Station busy — show message box
