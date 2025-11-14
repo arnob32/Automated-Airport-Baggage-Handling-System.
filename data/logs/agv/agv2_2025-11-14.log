@@ -1,12 +1,8 @@
-[2025-11-14 00:48:33] AGV-2 loaded baggage 4
-[2025-11-14 00:48:35] AGV-2 moving to Gate E
-[2025-11-14 00:48:35] AGV-2 reached Gate E | Battery: 75.0%
-[2025-11-14 00:48:36] AGV-2 unloaded baggage 4 into storage.
-[2025-11-14 00:51:03] AGV-2 loaded baggage 3
-[2025-11-14 00:51:05] AGV-2 moving to Gate D
-[2025-11-14 00:51:05] AGV-2 reached Gate D | Battery: 75.0%
-[2025-11-14 00:51:06] AGV-2 unloaded baggage 3 into storage.
-[2025-11-14 00:51:18] AGV-2 loaded baggage 6
-[2025-11-14 00:51:19] AGV-2 moving to Gate G
-[2025-11-14 00:51:19] AGV-2 reached Gate G | Battery: 45.0%
-[2025-11-14 00:51:21] AGV-2 unloaded baggage 6 into storage.
+[2025-11-14 01:38:34] AGV-2 loaded baggage 3
+[2025-11-14 01:38:36] AGV-2 moving to Gate D
+[2025-11-14 01:38:36] AGV-2 reached Gate D | Battery: 75.0%
+[2025-11-14 01:38:37] AGV-2 unloaded baggage 3 into storage.
+[2025-11-14 01:38:53] AGV-2 loaded baggage 10
+[2025-11-14 01:38:54] AGV-2 moving to Gate K
+[2025-11-14 01:38:54] AGV-2 reached Gate K | Battery: 45.0%
+[2025-11-14 01:38:56] AGV-2 unloaded baggage 10 into storage.
