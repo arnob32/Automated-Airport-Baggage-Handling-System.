@@ -25,8 +25,9 @@ This project models an automated airport luggage management system using autonom
 # ScreenCast Video
  ### Link: [https://drive.google.com/file/d/1UmJyqmAfcwJcIFCwc9kxV486QbNO2Ygy/view?usp=sharing]
 # Presentation
+[CapstonePresentation.pptx](https://github.com/user-attachments/files/23560491/CapstonePresentation.pptx)
 
-[CapstonePresentation.pptx](https://github.com/user-attachments/files/23560483/CapstonePresentation.pptx)
+
 
 
 
